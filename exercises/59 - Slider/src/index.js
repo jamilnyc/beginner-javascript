@@ -1,4 +1,4 @@
-function Slider(slider) {
+function Slider(slider, enableKeys = true) {
   if (!(slider instanceof Element)) {
     throw new Error('No slider passed in');
   }
@@ -10,6 +10,7 @@ function Slider(slider) {
   const slides = slider.querySelector('.slides');
   const prevButton = slider.querySelector('.goToPrev');
   const nextButton = slider.querySelector('.goToNext');
+  const validKeys = ['ArrowLeft', 'ArrowRight'];
 
   function startSlider() {
     current = slider.querySelector('.current') || slides.firstElementChild;
@@ -50,14 +51,40 @@ function Slider(slider) {
     applyClasses();
   }
 
+  // Navigate with Arrow keys if the slider is in focus
+  function handleKeyUp(event) {
+    if (!validKeys.includes(event.key)) {
+      return;
+    }
+
+    const inFocus =
+      slider === document.activeElement ||
+      slider.contains(document.activeElement);
+
+    if (!inFocus) {
+      return;
+    }
+
+    if (event.key === 'ArrowLeft') {
+      move('back');
+    } else {
+      move();
+    }
+  }
+
   // Like a constructor, run this when Slider is created
   startSlider();
   applyClasses();
 
   prevButton.addEventListener('click', () => move('back'));
-  // No argument passed, so will default to forward movement
+  // No argument passed, so it will default to forward movement
   nextButton.addEventListener('click', move);
+
+  if (enableKeys) {
+    slider.setAttribute('tabindex', '0');
+    slider.addEventListener('keyup', handleKeyUp);
+  }
 }
 
 const mySlider = Slider(document.querySelector('.slider'));
-const dogSlider = Slider(document.querySelector('.dog-slider'));
+const dogSlider = Slider(document.querySelector('.dog-slider'), false);
