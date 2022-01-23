@@ -1,3 +1,9 @@
+/**
+ * Create a Slider with the given element.
+ *
+ * @param {Element} slider Container that has slides
+ * @param {boolean} enableKeys Allow the slider to be focusable and controlled with arrow keys
+ */
 function Slider(slider, enableKeys = true) {
   if (!(slider instanceof Element)) {
     throw new Error('No slider passed in');
@@ -26,6 +32,11 @@ function Slider(slider, enableKeys = true) {
     next.classList.add('next');
   }
 
+  /**
+   * Move to the next/previous slide
+   *
+   * @param {string} direction Optional. Set to 'back' when moving to previous slide.
+   */
   function move(direction) {
     // remove existing classes
     const classesToRemove = ['prev', 'current', 'next'];
@@ -51,8 +62,13 @@ function Slider(slider, enableKeys = true) {
     applyClasses();
   }
 
-  // Navigate with Arrow keys if the slider is in focus
+  /**
+   * Handle navigation with arrow keys on slider.
+   *
+   * @param {KeyboardEvent} event
+   */
   function handleKeyUp(event) {
+    console.log(event);
     if (!validKeys.includes(event.key)) {
       return;
     }
@@ -81,6 +97,7 @@ function Slider(slider, enableKeys = true) {
   nextButton.addEventListener('click', move);
 
   if (enableKeys) {
+    // Allow the slider to be focused
     slider.setAttribute('tabindex', '0');
     slider.addEventListener('keyup', handleKeyUp);
   }
