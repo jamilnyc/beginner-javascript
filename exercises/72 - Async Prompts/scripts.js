@@ -139,7 +139,7 @@ const questions = [
  *
  * @param {Array} array
  * @callback callback
- * @returns Array
+ * @returns {Array}
  */
 async function asyncMap(array, callback) {
   const results = [];
