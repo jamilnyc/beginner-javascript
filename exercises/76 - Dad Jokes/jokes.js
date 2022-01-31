@@ -11,7 +11,9 @@ const buttonText = [
 
 const apiUrl = 'https://icanhazdadjoke.com';
 const jokeButton = document.querySelector('.getJoke');
+const jokeButtonSpan = jokeButton.querySelector('.jokeText');
 const jokeHolder = document.querySelector('.joke');
+const loader = document.querySelector('.loader');
 
 /**
  * Make a request to the API and return the parsed JSON response.
@@ -43,13 +45,25 @@ function randomItemFromArray(arr, not) {
   return item;
 }
 
+function enableLoader(enable = true) {
+  if (enable) {
+    jokeButtonSpan.classList.add('hidden');
+    loader.classList.remove('hidden');
+  } else {
+    jokeButtonSpan.classList.remove('hidden');
+    loader.classList.add('hidden');
+  }
+}
+
 async function handleClick() {
+  enableLoader();
   const { joke } = await fetchJoke();
   jokeHolder.textContent = joke;
-  jokeButton.textContent = randomItemFromArray(
+  jokeButtonSpan.textContent = randomItemFromArray(
     buttonText,
-    jokeButton.textContent
+    jokeButtonSpan.textContent
   );
+  enableLoader(false);
 }
 
 jokeButton.addEventListener('click', handleClick);
