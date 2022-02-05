@@ -8,9 +8,6 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "parcel-bundler": "^1.12.4"
-  },
   "dependencies": {
     "await-to-js": "^2.1.1",
     "axios": "^0.19.0",
@@ -21,5 +18,8 @@
   },
   "browserslist": [
     "last 1 chrome versions"
-  ]
+  ],
+  "devDependencies": {
+    "parcel": "^2.2.1"
+  }
 }
